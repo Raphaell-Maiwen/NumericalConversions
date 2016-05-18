@@ -31,9 +31,9 @@ public class NewMain {
             }
 
             if(number != 0){
-                String binaryNum = binaryConv(number, 2);
-                String hexaNum = binaryConv(number, 16);
-                String octalNum = binaryConv(number, 8);
+                String binaryNum = conversion(number, 2);
+                String hexaNum = conversion(number, 16);
+                String octalNum = conversion(number, 8);
                 System.out.println("Binary: " + binaryNum +
                                    "\nHexadecimal: " + hexaNum + 
                                    "\nOctal: " + octalNum +
@@ -46,8 +46,8 @@ public class NewMain {
     }
     
     //Try to implement this with a while, then with recursion.
-    public static String binaryConv(int number, int base){
-        String binaryNum = "";
+    public static String conversion(int number, int base){
+        String temp = "";
         int remainder = 0;
         char digit;
         while(number != 0){
@@ -79,18 +79,14 @@ public class NewMain {
             else{
                 digit = (char)('0' + remainder);
             }
-            binaryNum += digit;
+            temp += digit;
         }
         
         //Reverse
-        String temp = "";
-        for(int i = binaryNum.length()-1; i >= 0; i--){
-            temp += binaryNum.charAt(i);
+        String convertedNum = "";
+        for(int i = temp.length()-1; i >= 0; i--){
+            convertedNum += temp.charAt(i);
         }
-        return temp;
-    }
-    
-    public static int hexaConv(int number){
-        return 1;
+        return convertedNum;
     }
 }
