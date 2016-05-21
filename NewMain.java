@@ -1,3 +1,4 @@
+//Maybe TODO: use Enum
 package nc;
 
 import java.io.BufferedReader;
@@ -26,7 +27,7 @@ public class NewMain {
             boolean error = false;
             try{
                 number = readInt();
-            }catch (NumberFormatException e){ //bool?
+            }catch (NumberFormatException e){
                 System.out.println("Error: not a number.");
                 error = true;
             }
@@ -37,11 +38,17 @@ public class NewMain {
                     neg = true;
                 }
                 String binaryNum = conversion(number, 2);
-                String hexaNum = conversion(number, 16);
-                String octalNum = conversion(number, 8);
+                String hexaNum = "";
+                String octalNum = "";
                 
-                if(neg){
+                if(!neg){
+                    hexaNum = conversion(number, 16);
+                    octalNum = conversion(number, 8);
+                }
+                else{
                     binaryNum = binNegative(binaryNum);
+                    hexaNum = hexNegative(binaryNum);
+                    octalNum = octNegative(binaryNum);
                 }
                 System.out.println("Binary: " + binaryNum +
                                    "\nHexadecimal: " + hexaNum + 
@@ -155,7 +162,6 @@ public class NewMain {
                 else{
                     temp3 += negBin.charAt(i);
                 }
-                System.out.println("Temp: " + temp3);
             }
             for(int i = index +1; i < negBin.length(); i++){
                 temp3 += '0';
@@ -164,5 +170,128 @@ public class NewMain {
         }
         
         return negBin;
+    }
+    
+    /*
+     *The two following methods would be more re-usable if they took a decimal
+     *int as an argument, called the conversion method and then the binNegative
+     *method to obtain the entered number as a negative binary number. However,
+     *since we won't be needing it, we used this more concised method, as it is
+     *a bit faster.
+     */
+    public static String hexNegative(String binNeg){
+        String currentDigit = "";
+        String hexNeg = "";
+        for(int i = 0; i <= binNeg.length(); i++){ //i += 4?
+            if(i % 4  != 0){
+                currentDigit += binNeg.charAt(i);
+            }
+            else{
+                if(currentDigit.equals("0000")){
+                    hexNeg += '0';
+                }
+                else if(currentDigit.equals("0001")){
+                    hexNeg += '1';
+                }
+                else if(currentDigit.equals("0010")){
+                    hexNeg += '2';
+                }
+                else if(currentDigit.equals("0011")){
+                    hexNeg += '3';
+                }
+                else if(currentDigit.equals("0100")){
+                    hexNeg += '4';
+                }
+                else if(currentDigit.equals("0101")){
+                    hexNeg += '5';
+                }
+                else if(currentDigit.equals("0110")){
+                    hexNeg += '6';
+                }
+                else if(currentDigit.equals("0111")){
+                    hexNeg += '7';
+                }
+                else if(currentDigit.equals("1000")){
+                    hexNeg += '8';
+                }
+                else if(currentDigit.equals("1001")){
+                    hexNeg += '9';
+                }
+                else if(currentDigit.equals("1010")){
+                    hexNeg += 'A';
+                }
+                else if(currentDigit.equals("1011")){
+                    hexNeg += 'B';
+                }
+                else if(currentDigit.equals("1100")){
+                    hexNeg += 'C';
+                }
+                else if(currentDigit.equals("1101")){
+                    hexNeg += 'D';
+                }
+                else if(currentDigit.equals("1110")){
+                    hexNeg += 'E';
+                }
+                else if(currentDigit.equals("1111")){
+                    hexNeg += 'F';
+                }
+                if(i != binNeg.length()){
+                    currentDigit = "";
+                    currentDigit += binNeg.charAt(i);
+                }
+            }
+        }
+        return hexNeg;
+    }
+    
+    public static String octNegative(String binNeg){
+        String octNeg = "";
+        String currentDigit = "";
+        String temp = "";
+        if(binNeg.length() % 3 != 0){
+            for(int i = 0; (i + binNeg.length()) % 3 != 0; i++){
+                temp += '0';
+                System.out.println("Oh oh" + i);
+            }
+            temp += binNeg;
+            binNeg = temp;
+        }
+        
+        for(int i = 0; i <= binNeg.length(); i++){ //i += 4?
+            if(i % 3  != 0){
+                currentDigit += binNeg.charAt(i);
+            }
+            else{
+                if(currentDigit.equals("000")){
+                    octNeg += '0';
+                }
+                else if(currentDigit.equals("001")){
+                    octNeg += '1';
+                }
+                else if(currentDigit.equals("010")){
+                    octNeg += '2';
+                }
+                else if(currentDigit.equals("011")){
+                    octNeg += '3';
+                }
+                else if(currentDigit.equals("100")){
+                    octNeg += '4';
+                }
+                else if(currentDigit.equals("101")){
+                    octNeg += '5';
+                }
+                else if(currentDigit.equals("110")){
+                    octNeg += '6';
+                }
+                else if(currentDigit.equals("111")){
+                    octNeg += '7';
+                }
+                if(i != binNeg.length()){
+                    currentDigit = "";
+                    currentDigit += binNeg.charAt(i);
+                }
+            }
+        }
+        return octNeg;
     }
 }
